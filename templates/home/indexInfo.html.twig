@@ -1,0 +1,41 @@
+{% extends 'layouts/app.html.twig' %}
+
+{% block title %}Dpt. {{dpt}}{% endblock %}
+
+{% block body %}
+<main role="main" class="container">
+    <div class="card mt-5">
+        <div class="card-body">
+            <h2 class="center card-title">Département {{dpt}}</h2>
+            <hr>
+                <h3>
+                    Sélectionnez une application
+                </h3>
+                <br>
+                <div class="row">
+                <div class="col-md-4 col-xs-12">
+                    <a href="{{ path('form', {'dpt': dpt}) }}">Enquête JCO</a>
+                </div>
+                <div class="col-md-4 col-xs-12">
+                    <a href="{{ path('comptage', {'dpt': dpt})}}">Comptage JCO</a>
+                </div>
+                <div class="col-md-4 col-xs-12">
+                    <a href="{{ path('tutorat') }}">Tutorat</a>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-3">
+                    <a href="{{ path('contact') }}"><img class="image" width="50%" src="/images/logo.png" alt="Logo de PACOMIUT : Dessin de la tête de M.Marquesuzaa"></a>
+                </div>
+                <div class="offset-1 col-4">
+                    <a href="https://www.iutbayonne.univ-pau.fr" target="_blank"><img class="image" width="25%" src="/images/logo-iut.jpg" alt="Logo de l'IUT de Bayonne"></a>
+                </div>
+                <div class="col-4">
+                    <a href="https://www.univ-pau.fr/fr/index.html" target="_blank"><img class="image" width="70%" src="/images/logo_uppa.png" alt="Logo de l'UPPA"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

@@ -1,0 +1,174 @@
+{% extends 'layouts/app.html.twig' %}
+
+{% block title %}Informations sur le formulaire : {{ formulaire.id }} {% endblock %}
+
+{% block body %}
+<main role="main" class="container">
+    <div class="card mt-5">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-5 col-lg-5 col-xs-12">
+                    <h2 class="class-title">Informations sur le formulaire : {{ formulaire.id }} </h2>
+                </div>
+                <div class="col-md-7 col-lg-7 text-right">
+                    <a class="btn btn-sm btn-neutral" href="{{ path('formulaire') }}"><i class="fas fa-backward"></i> Retour</a>
+                    {% if(is_granted('ROLE_ADMIN')) %}
+                        {% if formulaire.actif == false %}
+                            <a href="{{ path('formulaire_actif', { formulaire: formulaire.id }) }}" style="color: white;"  class="btn btn-primary btn-sm">Rendre le formulaire actif</a>
+                        {% else %}
+                            <a href="{{ path('formulaire_inactif', { formulaire: formulaire.id }) }}" style="color: white;"  class="btn btn-primary btn-sm">Rendre le formulaire inactif</a>
+                        {% endif %}
+                        <a href="{{ path('formulaire_edit', { formulaire: formulaire.id }) }}" style="color: white;"  class="btn btn-primary btn-sm" title="Editer"><i class="far fa-edit"></i> Editer</a>
+                        <a href="{{ path('formulaire_edit_satisfaction', { formulaire: formulaire.id }) }}" style="color: white;"  class="btn btn-danger btn-sm" title="Editer"><i class="far fa-edit"></i> Editer les questions</a>
+                    {% endif %}
+                </div>
+            </div>
+            <hr>
+            <div class="container">
+                {% for label, messages in app.flashes %}
+                    {% for message in messages %}
+                        <div class="flash-{{ label }} alert alert-{{ label }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                    <hr>
+                {% endfor %}
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="name">Nom</label>
+                            <input readonly type="text" class="form-control" name="name" value="{{ formulaire.name }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="departement">Département</label>
+                            <input readonly type="text" class="form-control" name="departement" value="{{ formulaire.departement.name }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="type">Type de formulaire</label>
+                            <input readonly type="text" class="form-control" name="type" value="{{ formulaire.formattedType }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="createdAt">Créé le</label>
+                            <input readonly type="text" class="form-control" name="createdAt" value="{{ formulaire.createdAt.format('d-m-Y H:i:s') }}">
+                        </div>
+                    </div>
+                    <div class="col-md-8" style="overflow:scroll; max-height: 385px;">
+                        <h2>Questions du formulaire</h2>
+                        {% for block in formulaire.blocks %}
+                            Bloc : {{ block.name }}
+                            <ul>
+                                {% for question in block.questions %}
+                                    <li>{{ question.title }}</li>
+                                    <ul>
+                                        <li>Type de question : {{ question.typeFormatted }}</li>
+                                        {% if (question.isComplex) %}
+                                            <li>Choix possible</li>
+                                            <ul>
+                                                {% for choice in (question.answer|split('###')) %}
+                                                    <li>{{ choice }}</li>
+                                                {% endfor %}
+                                            </ul>
+                                        {% endif %}
+                                    </ul>
+                                {% endfor %}
+                            </ul>
+                            <br>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="container">
+                <h3>Commentaire sur ce formulaire</h3>
+                {% if formulaire.comment == '' %}
+                    <h4>Aucun commentaire</h4>
+                {% else %}
+                    <div class="form-group">
+                      <textarea readonly class="form-control" rows="5" id="comment">{{ formulaire.comment }}</textarea>
+                    </div>
+                {% endif %}
+            </div>
+            <hr>
+            <br>
+            <div class="container">
+                <h3>Nombre de réponse(s) : {{ nbr }}</h3>
+            </div>
+            <hr>
+            <div class="container">
+                <table id="table" class="table table-sm">
+                    <thead>
+                        <tr>
+                            {% for question in questions %}
+                                <th>Q{{ loop.index }}</th>
+                            {% endfor %}
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for reponse in formulaire.reponses %}
+                        <tr>
+                            {% for question in questions %}
+                                <th>{{ reponse.results[loop.index0].value ?? "Aucun résultat" }}</th>
+                            {% endfor %}
+                            <td>{{ reponse.createdat.format('d-m-Y H:i:s') }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <p>
+                    Libellé des questions : <br>
+                    {% for question in questions %}
+                        <span>- Q{{ loop.index  }} {{ question.title }}</span>
+                    {% endfor %}
+                </p>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    $(document).ready( function () {
+        $('#table').DataTable({
+            "language": {
+                "sProcessing":     "Traitement en cours...",
+                "sSearch":         "Rechercher&nbsp;:",
+                "sLengthMenu":     "Afficher _MENU_ &eacute;l&eacute;ments",
+                "sInfo":           "Affichage de l'&eacute;l&eacute;ment _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
+                "sInfoEmpty":      "Affichage de l'&eacute;l&eacute;ment 0 &agrave; 0 sur 0 &eacute;l&eacute;ment",
+                "sInfoFiltered":   "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
+                "sInfoPostFix":    "",
+                "sLoadingRecords": "Chargement en cours...",
+                "sZeroRecords":    "Aucun &eacute;l&eacute;ment &agrave; afficher",
+                "sEmptyTable":     "Aucune donn&eacute;e disponible dans le tableau",
+                "oPaginate": {
+                    "sFirst":      "Premier",
+                    "sPrevious":   "Pr&eacute;c&eacute;dent",
+                    "sNext":       "Suivant",
+                    "sLast":       "Dernier"
+                },
+                "oAria": {
+                    "sSortAscending":  ": activer pour trier la colonne par ordre croissant",
+                    "sSortDescending": ": activer pour trier la colonne par ordre d&eacute;croissant"
+                },
+                "select": {
+                    "rows": {
+                        _: "%d lignes séléctionnées",
+                        0: "Aucune ligne séléctionnée",
+                        1: "1 ligne séléctionnée"
+                    }
+                }
+            },
+            dom: 'Bfrtip',
+            responsive: true,
+            buttons: [
+                {extend: 'csv',
+                //Name the CSV
+                filename: 'RESULTATS_SATISFACTION_'+ '{{formulaire.name}}_DEPT_{{formulaire.departement.shortname|upper}}',
+                text: 'Télécharger le fichier CSV',}
+            ]
+        });
+    });
+</script>
+{% endblock %}

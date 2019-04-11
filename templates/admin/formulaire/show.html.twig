@@ -1,0 +1,282 @@
+{% extends 'layouts/app.html.twig' %}
+
+{% block title %}Informations sur le formulaire : {{ formulaire.id }} {% endblock %}
+
+{% block body %}
+<main role="main" class="container">
+    <div class="card mt-5">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-5 col-lg-5 col-xs-12">
+                    <h2 class="class-title">Informations sur le formulaire : {{ formulaire.id }} </h2>
+                </div>
+                <div class="col-md-7 col-lg-7 text-right">
+                    <a class="btn btn-sm btn-neutral" href="{{ path('formulaire') }}"><i class="fas fa-backward"></i> Retour</a>
+                    {% if(is_granted('ROLE_ADMIN')) %}
+                        {% if formulaire.actif == false %}
+                            <a href="{{ path('formulaire_actif', { formulaire: formulaire.id }) }}" style="color: white;"  class="btn btn-primary btn-sm">Rendre le formulaire actif</a>
+                        {% else %}
+                            <a href="{{ path('formulaire_inactif', { formulaire: formulaire.id }) }}" style="color: white;"  class="btn btn-primary btn-sm">Rendre le formulaire inactif</a>
+                        {% endif %}
+                        <a href="{{ path('formulaire_edit', { formulaire: formulaire.id }) }}" style="color: white;"  class="btn btn-primary btn-sm" title="Editer"><i class="far fa-edit"></i> Editer</a>
+                        <a href="{{ path('formulaire_edit_comptage', { formulaire: formulaire.id }) }}" style="color: white;"  class="btn btn-danger btn-sm" title="Editer"><i class="far fa-edit"></i> Editer les portes et formations</a>
+                    {% endif %}
+                </div>
+            </div>
+            <hr>
+            <div class="container">
+                {% for label, messages in app.flashes %}
+                    {% for message in messages %}
+                        <div class="flash-{{ label }} alert alert-{{ label }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                    <hr>
+                {% endfor %}
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="name">Nom</label>
+                            <input readonly type="text" class="form-control" name="name" value="{{ formulaire.name }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="departement">Département</label>
+                            <input readonly type="text" class="form-control" name="departement" value="{{ formulaire.departement.name }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="type">Type de formulaire</label>
+                            <input readonly type="text" class="form-control" name="type" value="{{ formulaire.formattedType }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="createdAt">Créé le</label>
+                            <input readonly type="text" class="form-control" name="createdAt" value="{{ formulaire.createdAt.format('d-m-Y H:i:s') }}">
+                        </div>
+                    </div>
+                    <div class="col-md-3"></div>
+                    <div class="col-md-5">
+                        <label for="porte">Portes</label>
+                        <ul>
+                            {% for porte in portes %}
+                                <li>{{ porte.name }}</li>
+                            {% endfor %}
+                        </ul>
+                        <label for="porte">Formations</label>
+                        <ul>
+                            {% for formation in formations %}
+                                <li>{{ formation.name }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="container">
+                <h3>Commentaire sur ce formulaire</h3>
+                {% if formulaire.comment == '' %}
+                    <h4>Aucun commentaire</h4>
+                {% else %}
+                    <div class="form-group">
+                      <textarea readonly class="form-control" rows="5" id="comment">{{ formulaire.comment }}</textarea>
+                    </div>
+                {% endif %}
+            </div>
+            <hr>
+            <br>
+            <div class="container">
+                <h3>Liste des réponses associées à ce formulaire</h3>
+                <br>
+                <div class="card cardAPropos">
+                    <h4>Il y a eu <strong>{{ (nombre_etudiant + nombre_accompagnateur) }}</strong> visiteurs au cours de {{ formulaire.name }}</h4>
+                    <h5>dont <strong>{{ nombre_etudiant }}</strong> étudiants potentiels et <strong>{{ (nombre_accompagnateur ?? 0 ) }}</strong> accompagnateurs.</h5>
+                    <table id="tableDeux" class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Formation</th>
+                                <th>Visiteur(s)</th>
+                                <th>Accompagnateur(s)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for formation in formations %}
+                            <tr>
+                                <th> {{ formation.name}} </th>
+                                <th> {{ tabCountAllFormations[formation.name] ?? 0 }} </th>
+                                <th> {{ tabAccomp[formation.name] ?? 0 }} </th>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <br>
+                {% if nombre_formation_encode is defined %}
+                    <div class="row">
+                        <div class="col-md-6">
+                            <canvas id="pie-chart" width="500" height="250"></canvas>
+                        </div>
+                        <div class="col-md-6">
+                            <canvas id="bar-chart" width="500" height="250"></canvas>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="">
+                        <table id="table" class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Formation(s)</th>
+                                    <th style="width:50px;">Porte d'entrée</th>
+                                    <th>Nombre <br>
+                                        d'accompagnateur(s) </th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for visiteur in formulaire.visiteurs %}
+                                <tr>
+                                    <td>{{ loop.index }}</td>
+                                    <td>
+                                        {% for formation in visiteur.formations %}
+                                            <li class="liTab">
+                                                {{ formation }}
+                                            </li>
+                                        {% endfor %}
+                                    </td>
+                                    <td>{{ visiteur.porte }}</td>
+                                    <td>{{ visiteur.accompagnateur }}</td>
+                                    <td>{{ visiteur.createdat.format('d-m-Y H:i:s') }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    {% if nombre_formation_encode is defined %}
+    $(document).ready( function () {
+        new Chart(document.getElementById("pie-chart"), {
+            type: 'pie',
+            data: {
+                labels: {{ portes_encode|raw }},
+                datasets: [{
+                    label: "Nombres de visiteurs uniques par porte",
+                    data: {{ nombre_porte_encode|raw }},
+                    backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'Nombres de visiteurs uniques par porte'
+                }
+            }
+        });
+
+        new Chart(document.getElementById("bar-chart"), {
+            type: 'bar',
+            data: {
+                labels: {{ formations_encode|raw }},
+                datasets: [
+                    {
+                        label: "Nombre de visiteurs",
+                        backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+                        data: {{ nombre_formation_encode|raw }}
+                    }
+                ]
+            },
+            options: {
+                legend: { display: false },
+                title: {
+                    display: true,
+                    text: 'Nombre de visiteurs par formation'
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+        $('#tableDeux').DataTable({
+            "language": {
+                "sProcessing":     "Traitement en cours...",
+                "sSearch":         "Rechercher&nbsp;:",
+                "sLengthMenu":     "Afficher _MENU_ &eacute;l&eacute;ments",
+                "sInfo":           "Affichage de l'&eacute;l&eacute;ment _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
+                "sInfoEmpty":      "Affichage de l'&eacute;l&eacute;ment 0 &agrave; 0 sur 0 &eacute;l&eacute;ment",
+                "sInfoFiltered":   "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
+                "sInfoPostFix":    "",
+                "sLoadingRecords": "Chargement en cours...",
+                "sZeroRecords":    "Aucun &eacute;l&eacute;ment &agrave; afficher",
+                "sEmptyTable":     "Aucune donn&eacute;e disponible dans le tableau",
+                "oPaginate": {
+                    "sFirst":      "Premier",
+                    "sPrevious":   "Pr&eacute;c&eacute;dent",
+                    "sNext":       "Suivant",
+                    "sLast":       "Dernier"
+                },
+                "oAria": {
+                    "sSortAscending":  ": activer pour trier la colonne par ordre croissant",
+                    "sSortDescending": ": activer pour trier la colonne par ordre d&eacute;croissant"
+                },
+                "select": {
+                    "rows": {
+                        _: "%d lignes séléctionnées",
+                        0: "Aucune ligne séléctionnée",
+                        1: "1 ligne séléctionnée"
+                    }
+                }
+            },
+        });
+        $('#table').DataTable({
+            "language": {
+                "sProcessing":     "Traitement en cours...",
+                "sSearch":         "Rechercher&nbsp;:",
+                "sLengthMenu":     "Afficher _MENU_ &eacute;l&eacute;ments",
+                "sInfo":           "Affichage de l'&eacute;l&eacute;ment _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
+                "sInfoEmpty":      "Affichage de l'&eacute;l&eacute;ment 0 &agrave; 0 sur 0 &eacute;l&eacute;ment",
+                "sInfoFiltered":   "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
+                "sInfoPostFix":    "",
+                "sLoadingRecords": "Chargement en cours...",
+                "sZeroRecords":    "Aucun &eacute;l&eacute;ment &agrave; afficher",
+                "sEmptyTable":     "Aucune donn&eacute;e disponible dans le tableau",
+                "oPaginate": {
+                    "sFirst":      "Premier",
+                    "sPrevious":   "Pr&eacute;c&eacute;dent",
+                    "sNext":       "Suivant",
+                    "sLast":       "Dernier"
+                },
+                "oAria": {
+                    "sSortAscending":  ": activer pour trier la colonne par ordre croissant",
+                    "sSortDescending": ": activer pour trier la colonne par ordre d&eacute;croissant"
+                },
+                "select": {
+                    "rows": {
+                        _: "%d lignes séléctionnées",
+                        0: "Aucune ligne séléctionnée",
+                        1: "1 ligne séléctionnée"
+                    }
+                }
+            },
+            dom: 'Bfrtip',
+            responsive: true,
+            buttons: [
+                {extend: 'csv',
+                //Name the CSV
+                filename: 'RESULTATS_COMPTAGE_'+ '{{formulaire.name}}_DEPT_{{formulaire.departement.shortname|upper}}',
+                text: 'Télécharger le fichier CSV',}
+            ]
+        });
+        var ctxPorte = document.getElementById("chartPorte");
+    });
+    {% endif %}
+</script>
+{% endblock %}

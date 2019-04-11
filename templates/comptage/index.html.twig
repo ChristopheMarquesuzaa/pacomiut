@@ -1,0 +1,96 @@
+{% extends 'layouts/app.html.twig' %}
+
+{% block title %}Compter les visiteurs!{% endblock %}
+
+{% block body %}
+<style>
+    @media(min-width: 1000px) {
+        .btn {
+            margin: 1.5rem;
+            bottom: 0px;
+            position: absolute;
+            right: 0px;
+        }
+    }
+</style>
+<main role="main" class="container">
+    <div class="card mt-5">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-8 col-lg-8  col-xs-12">
+                    <h2 class="class-title">Formulaire de la {{ formulaire.name }}</h2>
+                    <h3 class="card-title">Compter les visiteurs</h3>
+                </div>
+                <div class="col-md-4 col-lg-4 col-xs-12">
+                    <br>
+                    <h4 class="class-title">Département {{ formulaire.departement.name }}</h4>
+                </div>
+            </div>
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="flash-{{ label }} alert alert-{{ label }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+                <hr>
+            {% else %}
+                <hr>
+            {% endfor %}
+            <div class="alert alert-primary" role="alert">
+                Attention ! Chaque validation correspond à un visiteur.
+            </div>
+            {{ form_start(form) }}
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <legend class="col-form-label required">
+                                <i class="fas fa-graduation-cap"></i> Formation(s)
+                            </legend>
+                            <p style="font-size:65%; margin-bottom: 1%;">Vous pouvez sélectionner plusieurs formations. </p>
+                        </div>
+                        {{ form_widget(form._token) }}
+                        <div class="card-body">
+                            <div class="form-group">
+                                {{ form_errors(form.formations) }}
+                                {{ form_widget(form.formations) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <legend class="col-form-label required"><i class="fas fa-user-tie"></i>
+                                Nombre d'accompagnateur(s)
+                            </legend>
+                        </div>
+                        <div class="card-body">
+                            <div class="offset-3 col-6">
+                                <div class="form-group">
+                                    <div class="form-group form-inline">
+                                        {{ form_widget(form.accompagnateur) }}
+                                        {{ form_errors(form.accompagnateur) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <legend class="col-form-label required"><i class="fas fa-door-open"></i> Porte </legend>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                {{ form_errors(form.porte) }}
+                                {{ form_widget(form.porte, {label_attr: {class: 'radio-custom'}} ) }}
+                            </div>
+                        </div>
+                    </div>
+                    {{ form_row(form.Submit)}}
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends 'layouts/app.html.twig' %}
+
+{% block title %}Informations sur le département : {{ departement.name }} {% endblock %}
+
+{% block body %}
+<main role="main" class="container">
+    <div class="card mt-5">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-8 col-lg-8 col-xs-12">
+                    <h2 class="class-title">Informations sur le département : {{ departement.name }} </h2>
+                </div>
+                <div class="col-md-4 col-lg-4 text-right">
+                    <a class="btn btn-sm btn-neutral" href="{{ path('departement') }}"><i class="fas fa-backward"></i> Retour</a>
+                </div>
+            </div>
+            <hr>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="name">Nom</label>
+                            <input readonly type="text" class="form-control" name="name" value="{{ departement.name }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Nom court</label>
+                            <input readonly type="text" class="form-control" name="shortname" value="{{ departement.shortname }}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <br>
+            <div class="container">
+                <h2>Liste des formulaires associés à ce département</h2>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="table" class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Nom</th>
+                                    <th scope="col">Type</th>
+                                    <th scope="col">Créé le</th>
+                                    <th scope="col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for formulaire in departement.formulaires %}
+                                    <tr>
+                                        <td>{{ formulaire.name }}</td>
+                                        <td>{{ (formulaire.type == 0) ? 'Comptage' : 'Enquête' }}</td>
+                                        <td>{{ formulaire.createdat.format('d-m-Y H:i:s') }}</td>
+                                        <td>
+                                            <a style="color: white;"  title="Consulter"  class="btn btn-primary btn-sm" href="{{ path('formulaire_show', {formulaire: formulaire.id}) }}"><i class="far fa-eye"></i></a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    $(document).ready( function () {
+        $('#table').DataTable({
+            {{ include('layouts/_datatable.html.twig') }}
+        });
+    });
+</script>
+{% endblock %}

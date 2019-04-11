@@ -1,0 +1,137 @@
+{% extends 'layouts/app.html.twig' %}
+
+{% block title %}Nous contacter{% endblock %}
+
+{% block body %}
+<main role="main" class="container">
+    <div class="card mt-5">
+        <div class="card-body">
+            <h2 class="class-title">Qu'est ce que PACOMIUT ?</h1>
+                <hr>
+                <div class="container">
+                    <p>
+                        PACOMIUT est une application Web responsive pour l’<a href="https://www.iutbayonne.univ-pau.fr/" target="_blank">IUT de Bayonne et du Pays Basque</a>.
+                        Elle est composée de trois applications accessibles depuis un portail :
+                    </p>
+                    <p>
+                        <ul>
+                            <li>
+                                Une application permettant le comptage de visiteurs lors de la Journée Campus Ouvert
+                                (JCO).
+                            </li>
+                            <li>
+                                Une application permettant la création de formulaires d'enquête/satisfaction
+                                 pour la JCO.
+                            </li>
+                            <li>
+                                <s>Une application permettant la gestion du tutorat.</s>
+                            </li>
+                        </ul>
+                    </p>
+                    <p>
+                        Ce portail d'applications a pour objectif, dans un premier temps,
+                        d’aider les enseignants et étudiants du département Informatique de l’IUT; et dans
+                        un second temps, les référents de communication pour chaque département.
+                    </p>
+                </div>
+        </div>
+    </div>
+    <div class="card mt-5">
+        <div class="card-body">
+            <h2 class="class-title">Crédits</h1>
+                <hr>
+                <div class="container">
+                    <p>
+                        Cette application a été codée par BOURDET Camille, GRATENS Maxime, OLIVEIRA Maëva et PAGEAUX
+                        Clément,
+                        encadrés par Christophe MARQUESUZAÀ.
+                        Elle a été réalisée dans le cadre du projet tutoré de seconde année de <a href="https://www.iutbayonne.univ-pau.fr/dut/informatique" target="_blank"> DUT Informatique</a> (2018/2019).
+                    </p>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="card">
+                                <!-- <img src="..." class="card-img-top" alt="..."> -->
+                                <div class="card-body">
+
+                                    <div class="row">
+                                        <div class="col-7">
+                                            <h5 class="card-title">BOURDET Camille</h5>
+                                            <a href="https://www.linkedin.com/in/camille-bourdet-0080a7173/" target=_blank
+                                                class="card-link"><i class="fab fa-linkedin"></i></a>
+                                            <a href="mailto:Camillebourdet1999@gmail.com?subject=A propos de PACOMIUT"
+                                                class="card-link"><i class="fas fa-envelope"></i></a>
+                                        </div>
+                                        <div class="col-5">
+                                            <img src="{{ path }}/images/pcam.png" alt="" class="rounded float-right" height="85"
+                                                width="85">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card">
+                                <!-- <img src="..." class="card-img-top" alt="..."> -->
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-7">
+                                            <h5 class="card-title">GRATENS Maxime</h5>
+                                            <a href="https://www.linkedin.com/in/maxime-gratens-1263a9141/" target=_blank
+                                                class="card-link"><i class="fab fa-linkedin"></i></a>
+                                            <a href="mailto:gratens.maxime@gmail.com?subject=A propos de PACOMIUT"
+                                                class="card-link"><i class="fas fa-envelope"></i></a>
+                                        </div>
+                                        <div class="col-5">
+                                            <img src="{{ path }}/images/pmax.png" alt="" class="rounded float-right" height="85"
+                                                width="85">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card">
+                                <!-- <img src="..." class="card-img-top" alt="..."> -->
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-7">
+                                            <h5 class="card-title">OLIVEIRA Maëva</h5>
+                                            <a href="https://www.linkedin.com/in/ma%C3%ABva-oliveira-927a2a171/" target=_blank
+                                                class="card-link"><i class="fab fa-linkedin"></i></a>
+                                            <a href="mailto:Olvrmaeva@gmail.com?subject=A propos de PACOMIUT" class="card-link"><i
+                                                    class="fas fa-envelope"></i></a>
+                                        </div>
+                                        <div class="col-5">
+                                            <img src="{{ path }}/images/pmae.png" alt="" class="rounded float-right" height="85"
+                                                width="85">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card">
+                                <!-- <img src="..." class="card-img-top" alt="..."> -->
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-7">
+                                            <h5 class="card-title">PAGEAUX Clément</h5>
+                                            <a href="https://www.linkedin.com/in/cl%C3%A9ment-pageaux-758377172/"
+                                                target=_blank class="card-link"><i class="fab fa-linkedin"></i></a>
+                                            <a href="mailto:yeticlem79@hotmail.fr?subject=A propos de PACOMIUT" class="card-link"><i
+                                                    class="fas fa-envelope"></i></a>
+                                        </div>
+                                        <div class="col-5">
+                                            <img src="{{ path }}/images/pclem.png" alt="" class="rounded float-right" height="85"
+                                                width="85">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

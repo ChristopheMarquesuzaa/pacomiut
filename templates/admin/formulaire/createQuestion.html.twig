@@ -1,0 +1,53 @@
+{% extends 'layouts/app.html.twig' %}
+
+{% block title %}Ajouter un formulaire{% endblock %}
+
+{% block body %}
+<main role="main" class="container">
+    <div class="card mt-5">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-8 col-lg-8 col-xs-12">
+                    <h2 class="class-title">Ajouter des questions au bloc : {{ block.name }}</h2>
+                </div>
+                <div class="col-md-4 col-lg-4 text-right">
+                    {% if (blockNumber != 0) %}
+                        <a class="btn btn-sm btn-neutral" href="{{ path('formulaire_end', {'tempForm': tempForm.id, 'blockNumber': blockPrecedent }) }}"><i class="fas fa-backward">
+                            </i> Retour au bloc précédent
+                        </a>
+                    {% endif %}
+                    <a class="btn btn-sm btn-neutral" href="{{ path('formulaire') }}"><i class="fas fa-backward"></i> Retour</a>
+                </div>
+            </div>
+            <hr>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        {%
+                            form_theme form
+                                'layouts/jquery.collection.html.twig'
+                                'layouts/form/questionType.html.twig'
+                        %}
+                        {{ form(form) }}
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
+
+{% block javascripts %}
+<script src="{{ path }}/js/jquery.collection.js"></script>
+
+<script type="text/javascript">
+    $('.questions').collection({
+        up: '<a href="#" class="btn btn-primary btn-sm"><i class="fas fa-sort-up"></i></a>',
+        down: '<a href="#" class="btn btn-primary btn-sm"><i class="fas fa-sort-down"></i></a>',
+        add: '<a href="#" class="btn btn-success btn-sm"><i class="fas fa-plus"></i> Ajouter</a>',
+        remove: '<a href="#" class="btn btn-danger btn-sm"><i class="fas fa-times"></i> Supprimer</a>',
+        min: 1,
+    });
+</script>
+{% endblock %}

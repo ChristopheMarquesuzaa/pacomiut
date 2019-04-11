@@ -1,0 +1,663 @@
+{% extends 'layouts/app.html.twig' %}
+
+{% block title %}Résultats du formulaire!{% endblock %}
+
+{% block body %}
+<main role="main" class="container" style="max-width: 1500px;">
+    <div class="card mt-5">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-9 col-xs-12 col-lg-9">
+                    <h2 class="class-title">JCO 2019 (samedi 9 février)</h2>
+                </div>
+                <div class="col-md-3 col-xs-12 col-lg-3">
+                    <h4 class="class-title" id="dptDataForms">Département {{dpt}}</h4>
+                </div>
+            </div>
+            <hr>
+            {# <div class="card" id="cardAPropos">
+                <h4>Il y a eu <strong>{{nbReponses}}</strong> réponses au formulaire de la JCO 2019</h4>
+            </div>
+            <br> #}
+            <div class="card" id="cardAPropos">
+                {% if estMobile == true %}
+            <h3 class="card-title">Résultats de l'enquête des visiteurs : </h3>
+
+Cliquer sur un bouton pour afficher le résultat du champ concerné.
+<br>
+Dans la prochaine version, il sera possible d'exporter toutes les données dans un seul fichier CSV.
+
+                <table class="table table-sm mt-3 tabEstMobile">
+                    <tr>
+                        <th scope="col" id="titreTab" class="titreTab">Genre</th>
+                        <th scope="col" id="titreTab" class="titreTab">Age</th>
+                        <th scope="col" id="titreTab" class="titreTab">Type</th>
+                    </tr>
+                    <tr>
+                        <th id="tabPrincTop" class="titreTab bouton"> <button type="button" class="btn btn-primary btn-sm bouton"
+                                data-toggle="modal" data-target=".Genre">Voir
+                            </button>
+                            <div class="modal fade Genre" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4> Genre </h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <table>
+                                            <tr>
+                                                <th>ID</th>
+                                            </tr>
+                                            {% for form in forms %}
+                                            <tr>
+                                                <td id="tabPrinc">{{ form.id }}</td>
+                                                <td>
+                                                    {{ form.sexe ? 'H' : 'F'}}
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </th>
+                        <th id="tabPrincTop" class="titreTab bouton"> <button type="button" class="btn btn-primary btn-sm bouton"
+                                data-toggle="modal" data-target=".Age">Voir
+                            </button> <hr>
+                            <div class="modal fade Age" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4> Age </h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <table>
+                                            <tr>
+                                                <th>ID</th>
+                                            </tr>
+                                            {% for form in forms %}
+                                            <tr>
+                                                <td id="tabPrinc">{{ form.id }}</td>
+                                                <td>
+                                                    {{ form.age }}
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </th>
+                        <th id="tabPrincTop" class="titreTab bouton"> <button type="button" class="btn btn-primary btn-sm bouton"
+                                data-toggle="modal" data-target=".type">Voir
+                            </button>
+                            <div class="modal fade type" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4> Type </h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <table>
+                                            <tr>
+                                                <th>ID</th>
+                                            </tr>
+                                            {% for form in forms %}
+                                            <tr>
+                                                <td id="tabPrinc">{{ form.id }}</td>
+                                                <td>
+                                                    {{ form.type }}
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th scope="col" id="titreTab" class="titreTab">Département</th>
+                        <th scope="col" id="titreTab" class="titreTab">Ville</th>
+                        <th scope="col" id="titreTab" class="titreTab">Lycée/Établissement</th>
+                    </tr>
+                    <tr>
+                        <th id="tabPrincTop" class="titreTab"> <button type="button" class="btn btn-primary btn-sm bouton"
+                                data-toggle="modal" data-target=".dpt ">Voir
+                            </button>
+                            <div class="modal fade dpt" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4> Département </h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <table>
+                                            <tr>
+                                                <th>ID</th>
+                                            </tr>
+                                            {% for form in forms %}
+                                            <tr>
+                                                <td id="tabPrinc">{{ form.id }}</td>
+                                                <td>
+                                                    {{ form.departement }}
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </th>
+                        <th id="tabPrincTop" class="titreTab"> <button type="button" class="btn btn-primary btn-sm bouton"
+                                data-toggle="modal" data-target=".ville">Voir
+                            </button> <hr>
+                            <div class="modal fade ville" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4> Ville </h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <table>
+                                            <tr>
+                                                <th>ID</th>
+                                            </tr>
+                                            {% for form in forms %}
+                                            <tr>
+                                                <td id="tabPrinc">{{ form.id }}</td>
+                                                <td>
+                                                    {{ form.ville }}
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </th>
+                        <th id="tabPrincTop" class="titreTab"> <button type="button" class="btn btn-primary btn-sm bouton"
+                                data-toggle="modal" data-target=".ecole">Voir
+                            </button>
+                            <div class="modal fade ecole" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4> Lycée/Établissement </h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <table>
+                                            <tr>
+                                                <th>ID</th>
+                                            </tr>
+                                            {% for form in forms %}
+                                            <tr>
+                                                <td id="tabPrinc">{{ form.id }}</td>
+                                                <td>
+                                                    {{ form.ecole }}
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th scope="col" id="titreTab" class="titreTab">Formation actuelle</th>
+                        <th scope="col" id="titreTab" class="titreTab">Formations</th>
+                        <th scope="col" id="titreTab" class="titreTab">Motif</th>
+                    </tr>
+                    <tr>
+                        <th id="tabPrincTop" class="titreTab"> <button type="button" class="btn btn-primary btn-sm bouton"
+                                data-toggle="modal" data-target=".formation">Voir
+                            </button>
+                            <div class="modal fade formation" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4> Formation actuelle </h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <table>
+                                            <tr>
+                                                <th>ID</th>
+                                            </tr>
+                                            {% for form in forms %}
+                                            <tr>
+                                                <td id="tabPrinc">{{ form.id }}</td>
+                                                <td>
+                                                    {{ form.formation }}
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </th>
+                        <th id="tabPrincTop" class="titreTab"> <button type="button" class="btn btn-primary btn-sm bouton"
+                                data-toggle="modal" data-target=".formations">Voir
+                            </button> <hr>
+                            <div class="modal fade formations" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4> Formations </h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <table>
+                                            <tr>
+                                                <th>ID</th>
+                                            </tr>
+                                            {% for form in forms %}
+                                            <tr>
+                                                <td id="tabPrinc">{{ form.id }}</td>
+                                                <td>
+                                                    <ul>
+                                                        {% for formation in form.formations %}
+                                                        <li class="liTab">{{ formation }}</li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </th>
+                        <th id="tabPrincTop" class="titreTab"> <button type="button" class="btn btn-primary btn-sm bouton"
+                                data-toggle="modal" data-target=".motifs">Voir
+                            </button>
+                            <div class="modal fade motifs" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4> Motifs </h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <table>
+                                            <tr>
+                                                <th>ID</th>
+                                            </tr>
+                                            {% for form in forms %}
+                                            <tr>
+                                                <td id="tabPrinc">{{ form.id }}</td>
+                                                <td>
+                                                    {% for motif in form.motifs %}
+                                                    <li class="liTab">{{ motif }}</li>
+                                                    {% endfor %}
+                                                    {% if form.motifsAutre != NULL %}
+                                                    <li class="liTab">Autre : {{ form.motifsAutre }}</li>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th id="tabPrincTop" class="titreTab"> Provenance</th>
+                        <th id="tabPrincTop" class="titreTab"> Qualité</th>
+                        <th id="tabPrincTop" class="titreTab"> Utile</th>
+                    </tr>
+                    <tr>
+                        <th id="tabPrincTop" class="titreTab"> <button type="button" class="btn btn-primary btn-sm bouton"
+                                data-toggle="modal" data-target=".ecole">Voir
+                            </button>
+                            <div class="modal fade ecole" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4> Lycée/Établissement </h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <table>
+                                            <tr>
+                                                <th>ID</th>
+                                            </tr>
+                                            {% for form in forms %}
+                                            <tr>
+                                                <td id="tabPrinc">{{ form.id }}</td>
+                                                <td>
+                                                    {% for provenance in form.provenances %}
+                                                    <li class="liTab">{{ provenance }}</li>
+                                                    {% endfor %}
+                                                    {% if form.provenancesAutre != NULL %}
+                                                    <li class="liTab">Autre : {{ form.provenancesAutre }}</li>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </th>
+                        <th id="tabPrincTop" class="titreTab"> <button type="button" class="btn btn-primary btn-sm bouton"
+                                data-toggle="modal" data-target=".qualite">Voir
+                            </button> <hr>
+                            <div class="modal fade qualite" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4> Qualité </h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <table>
+                                            <tr>
+                                                <th>ID</th>
+                                            </tr>
+                                            {% for form in forms %}
+                                            <tr>
+                                                <td id="tabPrinc">{{ form.id }}</td>
+                                                <td id="tabPrinc">{{ form.qualite }}/4</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </th><th id="tabPrincTop" class="titreTab"> <button type="button" class="btn btn-primary btn-sm bouton"
+                                data-toggle="modal" data-target=".utile">Voir
+                            </button>
+                            <div class="modal fade utile" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4> Utile </h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <table>
+                                            <tr>
+                                                <th>ID</th>
+                                            </tr>
+                                            {% for form in forms %}
+                                            <tr>
+                                                <td id="tabPrinc">{{ form.id }}</td>
+                                                <td id="tabPrinc">{{  form.utile ? 'Oui' : 'Non' }}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th id="tabPrincTop" class="titreTab"> Candidat</th>
+                        <th id="tabPrincTop" class="titreTab"> Remarques</th>
+                        <th id="tabPrincTop" class="titreTab"> Heure </th>
+                    </tr>
+                    <tr>
+                        <th id="tabPrincTop" class="titreTab"> <button type="button" class="btn btn-primary btn-sm bouton"
+                                data-toggle="modal" data-target=".candidat">Voir
+                            </button>
+                            <div class="modal fade candidat" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4> Candidat </h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <table>
+                                            <tr>
+                                                <th>ID</th>
+                                            </tr>
+                                            {% for form in forms %}
+                                            <tr>
+                                                <td id="tabPrinc">{{ form.id }}</td>
+                                                <td>
+                                                    {{ form.candidat ? 'Oui' : 'Non' }}
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </th>
+                        <th id="tabPrincTop" class="titreTab"> <button type="button" class="btn btn-primary btn-sm bouton"
+                                data-toggle="modal" data-target=".autreR">Voir
+                            </button>
+                            <div class="modal fade autreR" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4> Autres remarques </h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <table>
+                                            <tr>
+                                                <th>ID</th>
+                                            </tr>
+                                            {% for form in forms %}
+                                            <tr>
+                                                <td id="tabPrinc">{{ form.id }}</td>
+                                                <td>
+                                                    {{ form.getAutre() }}
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </th>
+                        <th id="tabPrincTop" class="titreTab"> <button type="button" class="btn btn-primary btn-sm bouton"
+                                data-toggle="modal" data-target=".heure">Voir
+                            </button>
+                            <div class="modal fade heure" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4> Lycée/Établissement </h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <table>
+                                            <tr>
+                                                <th>ID</th>
+                                            </tr>
+                                            {% for form in forms %}
+                                            <tr>
+                                                <td id="tabPrinc">{{ form.id }}</td>
+                                                <td>
+                                                    {{ form.date.format('H:i:s') }} </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </th>
+                    </tr>
+                </table>
+            </div>
+            {% else %}
+
+Dans la prochaine version, il sera possible d'exporter toutes les données dans un seul fichier CSV.
+<br> <br>
+                            <h4 class="">Légende :</h4>
+
+            <table class="table table-sm mt-3">
+                <tr>
+                    <th id="tabPrincTop" class="titreTab"> C1</th>
+                    <th id="tabPrincTop" class="titreTab"> C2</th>
+                    <th id="tabPrincTop" class="titreTab"> C3</th>
+                    <th id="tabPrincTop" class="titreTab"> C4 </th>
+                    <th id="tabPrincTop" class="titreTab"> C5</th>
+                    <th id="tabPrincTop" class="titreTab"> C6</th>
+                    <th id="tabPrincTop" class="titreTab"> C7</th>
+                    <th id="tabPrincTop" class="titreTab"> C8</th>
+                    <th id="tabPrincTop" class="titreTab"> C9 </th>
+                    <th id="tabPrincTop" class="titreTab"> C10</th>
+                    <th id="tabPrincTop" class="titreTab"> C11</th>
+                    <th id="tabPrincTop" class="titreTab"> C12</th>
+                    <th id="tabPrincTop" class="titreTab"> C13</th>
+                    <th id="tabPrincTop" class="titreTab"> C14</th>
+                    <th id="tabPrincTop" class="titreTab"> C15</th>
+                </tr>
+                <tr>
+                    <td scope="col" id="tabPrincBot">Genre</td>
+                    <td scope="col" id="tabPrincBot">Age</td>
+                    <td scope="col" id="tabPrincBot">Type</td>
+                    <td scope="col" id="tabPrincBot">Département</td>
+                    <td scope="col" id="tabPrincBot">Ville</td>
+                    <td scope="col" id="tabPrincBot">Lycée/Établissement</td>
+                    <td scope="col" id="tabPrincBot">Formation actuelle</td>
+                    <td scope="col" id="tabPrincBot">Formations</td>
+                    <td scope="col" id="tabPrincBot">Motif</td>
+                    <td scope="col" id="tabPrincBot">Provenance</td>
+                    <td scope="col" id="tabPrincBot">Qualité</td>
+                    <td scope="col" id="tabPrincBot">Utile</td>
+                    <td scope="col" id="tabPrincBot">Candidat</td>
+                    <td scope="col" id="tabPrincBot">Remarques</td>
+                    <td scope="col" id="tabPrincBot">Heure</td>
+                </tr>
+            </table>
+        </div>
+        <br>
+        <div class="card" id="cardAPropos">
+            <h3 class="card-title">Résultats de l'enquête des visiteurs : </h3>
+            <table class="table table-sm mt-3">
+                <thead>
+                    <tr>
+                        <th id="tabPrincTop" class="titreTab"></th>
+                        <th id="tabPrincTop" class="titreTab"> C1</th>
+                        <th id="tabPrincTop" class="titreTab"> C2</th>
+                        <th id="tabPrincTop" class="titreTab"> C3</th>
+                        <th id="tabPrincTop" class="titreTab"> C4 </th>
+                        <th id="tabPrincTop" class="titreTab"> C5</th>
+                        <th id="tabPrincTop" class="titreTab"> C6</th>
+                        <th id="tabPrincTop" class="titreTab"> C7</th>
+                        <th id="tabPrincTop" class="titreTab"> C8</th>
+                        <th id="tabPrincTop" class="titreTab"> C9 </th>
+                        <th id="tabPrincTop" class="titreTab"> C10</th>
+                        <th id="tabPrincTop" class="titreTab"> C11</th>
+                        <th id="tabPrincTop" class="titreTab"> C12</th>
+                        <th id="tabPrincTop" class="titreTab"> C13</th>
+                        <th id="tabPrincTop" class="titreTab"> C14</th>
+                        <th id="tabPrincTop" class="titreTab"> C15</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for form in forms %}
+                    <tr>
+                        <td id="tabPrinc">{{ form.id }}</td>
+                        <td id="tabPrinc">{{ form.sexe ? 'H' : 'F' }}</td>
+                        <td id="tabPrinc">{{ form.age }}</td>
+                        <td id="tabPrinc">{{ form.type }}</td>
+                        <td id="tabPrinc">{{ form.departement }}</td>
+                        <td id="tabPrinc">{{ form.ville }}</td>
+                        <td id="tabPrinc">{{ form.ecole }}</td>
+                        <td id="tabPrinc">{{ form.formation }}</td>
+                        <td id="tabPrinc">
+                            {% for formation in form.formations %}
+                            <li class="liTab">{{ formation }}</li>
+                            {% endfor %}
+                        </td>
+                        <td id="tabPrinc">
+                            <ul id="ulTab">
+                                {% for motif in form.motifs %}
+                                <li class="liTab">{{ motif }}</li>
+                                {% endfor %}
+                                {% if form.motifsAutre != NULL %}
+                                <li class="liTab">Autre : {{ form.motifsAutre }}</li>
+                                {% endif %}
+                            </ul>
+                        </td>
+                        <td id="tabPrinc">
+                            <ul id="ulTab">
+                                {% for provenance in form.provenances %}
+                                <li class="liTab">{{ provenance }}</li>
+                                {% endfor %}
+                                {% if form.provenancesAutre != NULL %}
+                                <li class="liTab">Autre : {{ form.provenancesAutre }}</li>
+                                {% endif %}
+                            </ul>
+                        </td>
+                        <td id="tabPrinc">{{ form.qualite }}/4</td>
+                        <td id="tabPrinc">{{ form.utile ? 'Oui' : 'Non' }}</td>
+                        <td id="tabPrinc">{{ form.candidat ? 'Oui' : 'Non' }}</td>
+                        <td id="tabPrinc">{% if form.autre != NULL %}
+                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target=".remarques">Voir
+                            </button>
+                            <div class="modal fade remarques" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4> Autres remarques </h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        {{ form.autre }}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </td>
+                        <td id="tabPrinc">{{ form.date.format('H:i:s') }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+
+        </div>
+    </div>
+    </div>
+</main>
+{% endblock %}

@@ -1,0 +1,71 @@
+# PHP CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-php/ for more details
+#
+version: 2
+jobs:
+    build:
+        docker:
+          # specify the version you desire here
+            - image: circleci/php:7.1-browsers
+
+          # Specify service dependencies here if necessary
+          # CircleCI maintains a library of pre-built images
+          # documented at https://circleci.com/docs/2.0/circleci-images/
+          # - image: circleci/mysql:9.4
+
+        working_directory: ~/repo
+
+        steps:
+            - checkout
+
+            - run:
+                name: Install PHP sqlite and nodejs 6
+                command: sudo apt-get install -y libsqlite3-dev
+
+            # Download and cache dependencies
+            - restore_cache:
+                keys:
+                    - v1-dependencies-{{ checksum "composer.json" }}
+                    # fallback to using the latest cache if no exact match is found
+                    - v1-dependencies-
+            - run:
+                name: Get exact version of php
+                command: php -v
+            - run:
+                name: Setup Symfony testing environment variables for CircleCI test
+                command: cp .env.test .env
+
+            - run: composer install -n --prefer-dist --ignore-platform-reqs
+
+
+            - save_cache:
+                paths:
+                  - ./vendor
+                key: v1-dependencies-{{ checksum "composer.json" }}
+
+            - run:
+                name: Create database file
+                command: touch var/app.db
+
+            - run:
+                name: Delete migration for mysql
+                command: rm src/Migrations/Version*
+
+            - run:
+                name: Create migration for sqlite
+                command: php bin/console doctrine:migrations:generate
+
+            - run:
+                name: Migrate and fixture
+                command: php bin/console --no-interaction doctrine:migrations:migrate
+
+            # - run:
+            #     name: Run Symfony Server
+            #     command: php bin/console server:run
+            #     background: true
+
+            # - run:
+            #     name: Test 1 - Run Phpunit for Server-Side HTTP Requests & PHP Unit Testing
+            #     command: php bin/phpunit
+          # run tests!

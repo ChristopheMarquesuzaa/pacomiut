@@ -1,0 +1,37 @@
+{% extends 'layouts/app.html.twig' %}
+
+{% block title %}Bienvenue sur PACOMIUT{% endblock %}
+
+{% block body %}
+<main role="main" class="container">
+    <div class="card mt-5">
+        <div class="card-body">
+            <h2 class="card-title">Bienvenue sur PACOMIUT</h2>
+            <hr>
+                <h3>
+                    Sélectionnez votre département
+                </h3>
+                <br>
+                <div class="row">
+                    {% for departement in departements %}
+                        <div class="col-md-3 col-xs-10">
+                            <a href="{{ path('departement_show', { 'departement': departement.id }) }}">Dept. {{ departement.shortname }}</a>
+                        </div>
+                    {% endfor %}
+                </div>
+            <hr>
+            <div class="row">
+                <div class="col-3">
+                    <a href="{{ path('contact') }}"><img class="image" width="50%" src="{{ path }}/images/logo.png" alt="Logo de PACOMIUT : Dessin de la tête de M.Marquesuzaa"></a>
+                </div>
+                <div class="offset-1 col-4">
+                    <a href="https://www.iutbayonne.univ-pau.fr" target="_blank"><img class="image" width="25%" src="{{ path }}/images/logo-iut.jpg" alt="Logo de l'IUT de Bayonne"></a>
+                </div>
+                <div class="col-4">
+                    <a href="https://www.univ-pau.fr/fr/index.html" target="_blank"><img class="image" width="70%" src="{{ path }}/images/logo_uppa.png" alt="Logo de l'UPPA"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

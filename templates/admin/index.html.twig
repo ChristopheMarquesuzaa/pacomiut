@@ -1,0 +1,80 @@
+{% extends 'layouts/app.html.twig' %}
+
+{% block title %}Administration{% endblock %}
+
+{% block body %}
+<main role="main" class="container">
+    <div class="card mt-5">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-8 col-lg-8">
+                    <h2 class="class-title">Administration de PACOMIUT</h2>
+                </div>
+            </div>
+            <hr>
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="flash-{{ label }} alert alert-success">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+            <div class="container">
+                <div class="row text-center justify-content-md-center">
+                    {% if (is_granted('ROLE_ADMIN')) %}
+                        <div class="col-md-4 p-2">
+                            <a class="btn btn-primary" href="{{ path('departement') }}">
+                                Gestion des départements
+                            </a>
+                        </div>
+                    {% endif %}
+                    <div class="col-md-4 p-2">
+                        <a class="btn btn-primary" href="{{ path('formulaire') }}">
+                            Gestion des formulaires
+                        </a>
+                    </div>
+                    {% if (is_granted('ROLE_ADMIN')) %}
+                        <div class="col-md-4 p-2">
+                            <a class="btn btn-primary" href="{{ path('user_index') }}">
+                                Gestion des comptes
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+                {% if (is_granted('ROLE_ADMIN')) %}
+                    <div class="row text-center justify-content-md-center">
+                        <div class="col-md-6 p-2">
+                            <button onclick="resetUsers()" class="btn btn-danger">
+                                Remettre à zero la base de données des utilisateurs
+                            </button>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    function resetUsers()
+    {
+        Swal.fire({
+            title: 'Attention, merci de confirmer !  Vous allez supprimer tous les comptes utilisateurs. Ils devront re-être synchroniser avec LDAP. Il ne restera que le compte adminsitrateur initial.',
+            text: "Vous allez vider la base de données.",
+            type: 'warning',
+            showCancelButton: true,
+            cancelButtonText: 'Non !',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Oui, vider la base !'
+        }).then((result) => {
+            if (result.value) {
+                window.location.replace("{{ path('user_reset')}}");
+            }
+        })
+    }
+</script>
+{% endblock %}

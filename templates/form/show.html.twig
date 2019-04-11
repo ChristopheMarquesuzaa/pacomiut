@@ -1,0 +1,363 @@
+{% extends 'layouts/app.html.twig' %}
+
+{% block title %}Répondre au formulaire!{% endblock %}
+
+{% block body %}
+<style>
+    .form-inline label {
+        justify-content: initial;
+    }
+</style>
+<main role="main" class="container">
+    <div class="card mt-5 xs-12">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-xs-12 col-lg-8 ">
+                    <h2 class="class-title">JCO 2019 (samedi 9 février)</h2>
+                    <h3 class="card-title">Remplir l'enquête </h3>
+                </div>
+                <div class="col-xs-12 col-lg-4">
+                    <br>
+                    <h4 class="class-title">Département {{dpt}}</h4>
+                </div>
+            </div>
+            <hr>
+            {% for label, messages in app.flashes %}
+            {% for message in messages %}
+            <div class="flash-{{ label }} alert alert-{{ label }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+            <hr>
+            {% endfor %}
+            {{ form_start(f_form) }}
+            <div class="container" style="max-width: 98%;">
+
+                <div class="card ">
+                    <div class="card-header">
+                        Informations personnelles
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4 col-xs-12">
+                                <div class="row form-group">
+                                    <div class="col-md-4 col-xs-12">
+                                        <legend class="col-form-label required"> <i class="fas fa-transgender"></i>
+                                            Genre :
+                                        </legend>
+                                    </div>
+                                    <div class="col-md-7 col-xs-12" id="genreFormShowCase">
+                                        {{ form_errors(f_form.sexe) }}
+                                        {{ form_widget(f_form.sexe, {label_attr: {class: 'radio-custom
+                                        radio-inline'} }
+                                        ) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-xs-12">
+                                <div class="form-group form-inline row">
+                                    <div class="col-md-5 col-xs-12" id="ageFormShowLabel">
+                                        <legend class="col-form-label required input-form"> <i class="fas fa-birthday-cake"></i>
+                                            Age :</legend>
+                                    </div>
+                                    <div class="col-md-6 col-xs-12" id="ageFormShowCase">
+                                        {{ form_widget(f_form.age, { 'attr': {'style': 'width: 70%'} }) }}
+                                        {{ form_errors(f_form.age) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5 col-xs-12">
+                                <div class="form-group form-inline row">
+                                    <div class="offset-md-1 col-md-4 col-xs-12" id="vousetesFormShowLabel">
+                                        <legend class="col-form-label required input-form"> <i class="fas fa-walking"></i>
+                                            Vous êtes : </legend>
+                                    </div>
+                                    <div class="col-md-6  col-xs-12" id="vousetesFormShowCase">
+                                        {{ form_widget(f_form.type,{label_attr: {class: 'radio-custom
+                                        radio-inline'} })
+                                        }}
+                                        {{ form_errors(f_form.type) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="card">
+                    <div class="card-header">
+                        Provenance
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 col-xs-12">
+                                <div class="form-group form-inline">
+                                    <legend class="col-form-label required input-form"> <i class="fas fa-street-view"></i>
+                                        Département </legend>
+                                    {{ form_widget(f_form.departement) }}
+                                    {{ form_errors(f_form.departement) }}
+                                    <p id="exempleEcole" class="exempleEcole" media="screen and (min-width: 500px)">
+                                        Exemple : 64</p>
+                                </div>
+                                <div class="form-group form-inline">
+                                    <legend class="col-form-label required input-form"><i class="fas fa-city"></i>
+                                        Ville
+                                    </legend>
+                                    {{ form_widget(f_form.ville) }}
+                                    {{ form_errors(f_form.ville) }}
+                                    <p id="exempleEcole" class="exempleEcole" media="screen and (min-width: 500px)">
+                                        Exemple : Anglet </p>
+                                </div>
+                                <div class="form-group form-inline">
+                                    <legend class="col-form-label required input-form"><i class="fas fa-school"></i>
+                                        Lycée /
+                                        Etablissement </legend>
+                                    {{ form_widget(f_form.ecole) }}
+                                    {{ form_errors(f_form.ecole) }}
+                                    <p id="exempleEcole" class="exempleEcole" media="screen and (min-width: 500px)">
+                                        Exemple : Lycée Cantau </p>
+                                    <br>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xs-12">
+                                {# {% if estMobile == true %}
+                                <br><br><br>
+                                {% endif %}
+                                #} <div class="form-group form-inline">
+                                    <legend class="col-form-label required input-form formact" media="screen and (max-width: 480px)"><i
+                                            class="fas fa-graduation-cap"></i>
+                                        Formation actuelle </legend>
+                                    {{ form_widget(f_form.formation, {label_attr: {class: 'radio-custom'} }) }}
+                                    {{ form_errors(f_form.formation) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="card">
+                    <div class="card-header">
+                        A propos de la JCO
+                    </div>
+                    <div class="card-body">
+                        <br>
+                        <div class="card" id="cardAPropos">
+                            <div class="row">
+                                <div class="col-md-6 col-xs-12">
+                                    <div class="form-group">
+
+                                        <legend class="col-form-label required"><i class="fas fa-graduation-cap"></i>
+                                            Quelle(s) formation(s) vous intéresse(nt) ?</legend>
+                                        </h3>
+                                        {% if (dpt == 'Info' or dpt == 'GIM') %}
+                                        <div id="form_info_gim_formations">
+                                            <h6> Informatique </h6>
+                                            <div class="custom-control custom-checkbox"> <input type="checkbox" id="form_info_gim_formations_0"
+                                                    name="form_info_gim[formations][]" class="custom-control-input"
+                                                    value="DUT Informatique" />
+                                                <label class="custom-control-label" for="form_info_gim_formations_0">DUT
+                                                    Informatique</label></div>
+                                            <div class="custom-control custom-checkbox"> <input type="checkbox" id="form_info_gim_formations_1"
+                                                    name="form_info_gim[formations][]" class="custom-control-input"
+                                                    value="LP Métiers du Numérique" />
+                                                <label class="custom-control-label" for="form_info_gim_formations_1">LP
+                                                    Métiers du Numérique</label></div>
+                                            <div class="custom-control custom-checkbox"> <input type="checkbox" id="form_info_gim_formations_2"
+                                                    name="form_info_gim[formations][]" class="custom-control-input"
+                                                    value="LP Programmation Avancée" />
+                                                <label class="custom-control-label" for="form_info_gim_formations_2">LP
+                                                    Programmation Avancée</label></div>
+                                            <div class="custom-control custom-checkbox"> <input type="checkbox" id="form_info_gim_formations_3"
+                                                    name="form_info_gim[formations][]" class="custom-control-input"
+                                                    value="DU TIC" />
+                                                <label class="custom-control-label" for="form_info_gim_formations_3">DU
+                                                    Technologies de l&#039;Information et de la Communication</label></div>
+                                            <h6> GIM </h6>
+                                            <div class="custom-control custom-checkbox"> <input type="checkbox" id="form_info_gim_formations_4"
+                                                    name="form_info_gim[formations][]" class="custom-control-input"
+                                                    value="DUT GIM" />
+                                                <label class="custom-control-label" for="form_info_gim_formations_4">DUT
+                                                    GIM</label></div>
+                                            <div class="custom-control custom-checkbox"> <input type="checkbox" id="form_info_gim_formations_5"
+                                                    name="form_info_gim[formations][]" class="custom-control-input"
+                                                    value="LP Ecologie Industrielle" />
+                                                <label class="custom-control-label" for="form_info_gim_formations_5">LP
+                                                    Ecologie Industrielle</label></div>
+                                            <div class="custom-control custom-checkbox"> <input type="checkbox" id="form_info_gim_formations_6"
+                                                    name="form_info_gim[formations][]" class="custom-control-input"
+                                                    value="LP Geo 3D" />
+                                                <label class="custom-control-label" for="form_info_gim_formations_6">LP
+                                                    Geo 3D</label></div>
+                                            <div class="custom-control custom-checkbox"> <input type="checkbox" id="form_info_gim_formations_7"
+                                                    name="form_info_gim[formations][]" class="custom-control-input"
+                                                    value="LP Ingénierie des Façades" />
+                                                <label class="custom-control-label" for="form_info_gim_formations_7">LP
+                                                    Ingénierie des Façades</label></div>
+                                        </div> {{ form_errors(f_form.formations) }}
+                                        {% else %}
+                                        {{ form_errors(f_form.formations) }}
+                                        {{ form_widget(f_form.formations, {label_attr: {class: 'checkbox-custom'} } )
+                                        }}
+                                        {% endif %}
+                                    </div>
+
+                                    <div class="form-group">
+
+                                        <legend class="col-form-label required"> <i class="fas fa-hands-helping"></i>
+                                            Quel est le motif de votre visite ? </legend>
+                                        {{ form_widget(f_form.motifs, {label_attr: {class: 'checkbox-custom'} } )
+                                        }}
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" onclick="txtInput()" id="div-motif" class="custom-control-input"
+                                                value="autre" />
+                                            <label class="custom-control-label" for="div-motif">Autre</label></div>
+                                        {{ form_errors(f_form.motifs) }}
+                                        <div id="text" style="display:none"> <br>
+                                            {{ form_widget(f_form.motifsAutre,{ 'attr': {'style': 'width:
+                                            75%'} }) }}
+                                            {{ form_errors(f_form.motifsAutre) }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-xs-12">
+                                    <div class="form-group">
+                                        <legend class="col-form-label required"> <i class="fas fa-question-circle"></i>
+                                            Comment avez-vous eu connaissance de la JCO ? </legend>
+                                        {{ form_widget(f_form.provenances, {label_attr: {class: 'checkbox-custom'} } )
+                                        }}
+                                        {{ form_errors(f_form.provenances) }}
+                                        <div class="custom-control custom-checkbox"> <input type="checkbox" onclick="txtInput2()"
+                                                id="div_provenances" class="custom-control-input" value="autre" />
+                                            <label class="custom-control-label" for="div_provenances">Autre</label>
+                                        </div>
+                                        <div id="text2" style="display:none">
+                                            <br>
+                                            {{ form_widget(f_form.provenancesAutre,{ 'attr': {'style': 'width:
+                                            75%'} }) }}
+                                            {{ form_errors(f_form.provenancesAutre) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><br>
+
+                    <div class="card-body">
+                        <br>
+                        <div class="card" id="cardAPropos">
+                            <h3 id="hApropos"> Vos impressions à l'issue de la visite</h3>
+                            <div class="row">
+                                <div class="col-md-12 col-xs-12">
+                                    <div class="form-group form-inline ">
+                                        <legend class="col-form-label required " style="width:65%;"> <i class="fas fa-info"></i>
+                                            Les informations
+                                            présentées vous ont paru <br>(<i class="far fa-angry"></i>=Médiocres, <i class="far fa-laugh-beam"></i>=Très bonnes) </legend>
+                                        {# {{ form_widget(f_form.qualite, {label_attr: {class: 'radio-custom
+                                        radio-inline'} })
+                                        }}
+
+                                        #}
+                                        <div id="form_info_gim_qualite">
+                                            <div class="custom-control custom-radio custom-control-inline"> <input type="radio"
+                                                    id="form_info_gim_qualite_0" name="form_info_gim[qualite]" required="required"
+                                                    class="custom-control-input" value="1" />
+                                                <label class="custom-control-label required" for="form_info_gim_qualite_0"><i class="far fa-angry"></i></label></div>
+                                            <div class="custom-control custom-radio custom-control-inline"> <input type="radio"
+                                                    id="form_info_gim_qualite_1" name="form_info_gim[qualite]" required="required"
+                                                    class="custom-control-input" value="2" />
+                                                <label class="custom-control-label required" for="form_info_gim_qualite_1"><i class="far fa-frown"></i></label></div>
+                                            <div class="custom-control custom-radio custom-control-inline"> <input type="radio"
+                                                    id="form_info_gim_qualite_2" name="form_info_gim[qualite]" required="required"
+                                                    class="custom-control-input" value="3" />
+                                                <label class="custom-control-label required" for="form_info_gim_qualite_2"><i class="far fa-smile"></i></label></div>
+                                            <div class="custom-control custom-radio custom-control-inline"> <input type="radio"
+                                                    id="form_info_gim_qualite_3" name="form_info_gim[qualite]" required="required"
+                                                    class="custom-control-input" value="4" />
+                                                <label class="custom-control-label required" for="form_info_gim_qualite_3"><i class="far fa-laugh-beam"></i></label></div>
+                                        </div>
+                                        {{ form_errors(f_form.qualite) }}
+                                    </div>
+                                    <div class="form-group form-inline">
+                                        <label class="col-form-label required" style="width:65%;"> La
+                                            Journée
+                                            Campus
+                                            Ouvert
+                                            vous a-t-elle été utile pour vos choix ? </label>
+                                        {{ form_widget(f_form.utile, {label_attr: {class: 'radio-custom
+                                        radio-inline'}
+                                        })
+                                        }}
+                                        {{ form_errors(f_form.utile) }}
+                                    </div>
+                                    <div class="form-group form-inline">
+                                        <label class="col-form-label required" style="width:65%;">
+                                            Pensez-vous postuler pour une de nos formations ? </label>
+                                        {{ form_widget(f_form.candidat, {label_attr: {class: 'radio-custom
+                                        radio-inline'}
+                                        }) }}
+                                        {{ form_errors(f_form.candidat) }}
+                                    </div>
+                                    <br>
+                                    <div class="form-group form-inline row">
+                                        <div class="col-md-3 col-xs-12">
+                                            <label class="col-form-label rqlibres"> Remarques libres </label>
+                                        </div>
+                                        <div class="col-md-9 col-xs-12">
+                                            {{ form_widget(f_form.autre,{ 'attr': {'style': 'width: 90%'} }) }}
+                                            {{ form_errors(f_form.autre) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="offset-md-5 offset-xs-3 col-md-2 col-xs-6">
+                    <div class="form-group">
+                        <br>
+                        {{ form_row(f_form._token) }}
+                        <button type="submit" id="formsave" name="form[save]" class="btn-success btn">Envoyer
+                            le formulaire</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</main>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    function txtInput2() {
+        // Get the checkbox
+        var checkBox = document.getElementById("div_provenances");
+        // Get the output text
+        var text = document.getElementById("text2");
+
+        // If the checkbox is checked, display the output text
+        if (checkBox.checked == true) {
+            text.style.display = "block";
+        } else {
+            text.style.display = "none";
+        }
+    }
+
+    function txtInput() {
+        // Get the checkbox
+        var checkBox = document.getElementById("div-motif");
+        // Get the output text
+        var text = document.getElementById("text");
+
+        // If the checkbox is checked, display the output text
+        if (checkBox.checked == true) {
+            text.style.display = "block";
+        } else {
+            text.style.display = "none";
+        }
+    }
+</script>
+{% endblock %}

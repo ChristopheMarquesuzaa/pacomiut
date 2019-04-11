@@ -1,0 +1,13 @@
+{% block QuestionType_label %}{% endblock %}
+
+{% block QuestionsType_widget %}
+
+    <div class="row">
+        <div class="col-md-5">
+            {{ form_widget(form.name) }}
+            {{ form_widget(form.type) }}
+            {{ form_widget(form.answer) }}
+        </div>
+    </div>
+
+{% endblock %}

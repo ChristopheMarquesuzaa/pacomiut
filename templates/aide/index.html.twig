@@ -1,0 +1,392 @@
+{% extends 'layouts/app.html.twig' %}
+
+{% block title %} AIDE - PACOMIUT {% endblock %}
+
+{% block body %}
+<main role="main" class="container" id="top">
+
+    <div class="card mt-5">
+        <div class="card-body">
+            <h1>Sommaire</h1>
+            <h2><a href="#comp"> Application de comptage</a></h2>
+            <ul>
+                <li> <a href="#creerComp"> Comment créer un formulaire de comptage ?</a></li>
+                <li> <a href="#actifComp"> Comment rendre actif un formulaire de comptage ?</a></li>
+                <li> <a href="#remplirComp"> Comment remplir et télécharger un formulaire de comptage ?</a> </li>
+                <li> <a href="#editComp"> Comment éditer un formulaire de comptage?</a> </li>
+                <li> <a href="#consultComp"> Comment consulter un formulaire de comptage ?</a> </li>
+            </ul>
+            <h2><a href="#enq">Application d'enquête</a> </h2>
+            <ul>
+                <li> <a href="#creerEnq">Comment créer un formulaire d'enquête ? </a></li>
+                <li> <a href="#actifEnq">Comment rendre actif un formulaire d'enquête ?</a> </li>
+                <li> <a href="#remplirEnq">Comment remplir et télécharger un formulaire d'enquête ?</a> </li>
+                <li> <a href="#editEnq"> Comment éditer un formulaire d'enquête ?</a> </li>
+
+            </ul>
+        </div>
+    </div>
+    <div >
+        <a href="#top"><img src="\images\to_top.png" width="3.5%" id="scrollUp"  /></a>
+    </div>
+    <div class="card mt-5">
+        <div class="card-body" id="comp">
+            <div class="row">
+                <div class="col-md-6 col-lg-6 col-xs-12">
+                    <br>
+                    <h1 class="class-title">Aide pour l'application de Comptage</h1>
+                </div>
+            </div>
+            <hr>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <legend class="col-form-label required" id='creerComp'>
+                            <i class="fas fa-graduation-cap"></i> Comment créer un formulaire de comptage ?
+                        </legend>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <p>Consulter notre vidéo : <a href="https://www.youtube.com/watch?v=q88VtAeYoF8"
+                                    target="_blank">https://www.youtube.com/watch?v=q88VtAeYoF8</a></p>
+                            <button id="actifComp" type="button" class="btn btn-danger" data-toggle="modal"
+                                data-target="#infos" class="btn btn-primary">▶</button>
+                            <div class="modal" id="infos">
+                                <div class="modal-dialog">
+                                    <div class="modal-content" style="width:100%;">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">PACOMIUT - COMPTAGE - TUTO Créer formulaire</h4>
+                                            <button type="button" class="close" data-dismiss="modal">
+                                                <span>&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <iframe width="100%" height="315"
+                                                src="https://www.youtube.com/embed/q88VtAeYoF8" frameborder="0"
+                                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                                allowfullscreen></iframe>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary"
+                                                data-dismiss="modal">Fermer</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div>
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header" id="actifComp">
+                            <legend class="col-form-label required">
+                                <i class="fas fa-graduation-cap"></i> Comment rendre actif un formulaire de comptage ?
+                            </legend>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <p>Consulter notre vidéo : <a href="https://www.youtube.com/watch?v=7dOhwcWqso4"
+                                        target="_blank">https://www.youtube.com/watch?v=7dOhwcWqso4</a></p>
+                                <button type="button" class="btn btn-danger" id="remplirComp" data-toggle="modal"
+                                    data-target="#infos" class="btn btn-primary">▶</button>
+                                <div class="modal" id="infos">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content" style="width:100%;">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">PACOMIUT - COMPTAGE - TUTO Activer formulaire
+                                                </h4>
+                                                <button type="button" class="close" data-dismiss="modal">
+                                                    <span>&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <iframe width="100%" height="315"
+                                                    src="https://www.youtube.com/embed/7dOhwcWqso4" frameborder="0"
+                                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                                    allowfullscreen></iframe>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-primary"
+                                                    data-dismiss="modal">Fermer</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <legend class="col-form-label required">
+                                <i class="fas fa-graduation-cap"></i> Comment remplir et télécharger un formulaire
+                                de
+                                comptage ?
+                            </legend>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <p>Consulter notre vidéo : <a href="https://www.youtube.com/watch?v=uZhAaEOCdhk"
+                                        target="_blank">https://www.youtube.com/watch?v=uZhAaEOCdhk</a></p>
+                                <button type="button red" id="editComp" class="btn btn-danger" data-toggle="modal"
+                                    data-target="#infos" class="btn btn-primary">▶</button>
+                                <div class="modal" id="infos">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content" style="width:100%;">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">PACOMIUT - COMPTAGE - TUTO Remplir et
+                                                    télécharger formulaire</h4>
+                                                <button type="button" class="close" data-dismiss="modal">
+                                                    <span>&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <iframe width="100%" height="315"
+                                                    src="https://www.youtube.com/embed/uZhAaEOCdhk" frameborder="0"
+                                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                                    allowfullscreen></iframe> </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-primary"
+                                                    data-dismiss="modal">Fermer</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <legend class="col-form-label required">
+                                <i class="fas fa-graduation-cap"></i> Comment éditer un formulaire de comptage ?
+                            </legend>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <p>Consulter notre vidéo : <a href="https://www.youtube.com/watch?v=aiRoFxEou2c"
+                                        target="_blank">https://www.youtube.com/watch?v=aiRoFxEou2c</a></p>
+                                <button type="button" id="consultComp" class="btn btn-danger" data-toggle="modal"
+                                    data-target="#infos" class="btn btn-primary">▶</button>
+                                <div class="modal" id="infos">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content" style="width:100%;">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">PACOMIUT - COMPTAGE - TUTO Editer formulaire
+                                                </h4>
+                                                <button type="button" class="close" data-dismiss="modal">
+                                                    <span>&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <iframe width="100%" height="315"
+                                                    src="https://www.youtube.com/embed/aiRoFxEou2c" frameborder="0"
+                                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                                    allowfullscreen></iframe>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-primary"
+                                                    data-dismiss="modal">Fermer</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <legend class="col-form-label required">
+                                <i class="fas fa-graduation-cap"></i> Comment consulter un formulaire de comptage ?
+                            </legend>
+                        </div>
+                        <div class="card-body" >
+                            <div class="form-group">
+                                <p>Cliquer sur l'icone <a style="color: white;" type="button" class="btn btn-info">
+                                        <i class="far fa-eye" id="enq"></i> </a> </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="card mt-5">
+        <div class="card-body">
+            <div class="row" id="creerEnq">
+                <div class="col-md-6 col-lg-6 col-xs-12">
+                    <br>
+                   <h1 class="class-title">Aide pour l'application d'enquête</h1>
+                </div>
+            </div>
+            <hr>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <legend class="col-form-label required" id='creerComp'>
+                            <i class="fas fa-graduation-cap"></i> Comment créer un formulaire d'enquête ?
+                        </legend>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <p>Consulter notre vidéo : <a href="https://www.youtube.com/watch?v=rJgPoL4hiSU" target="_blank">https://www.youtube.com/watch?v=rJgPoL4hiSU</a></p>
+                            <button id="actifEnq" type="button" class="btn btn-danger" data-toggle="modal"
+                                data-target="#infos" class="btn btn-primary">▶</button>
+                            <div class="modal" id="infos">
+                                <div class="modal-dialog">
+                                    <div class="modal-content" style="width:100%;">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">PACOMIUT - COMPTAGE - TUTO Créer formulaire</h4>
+                                            <button type="button" class="close" data-dismiss="modal">
+                                                <span>&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <iframe width="100%" height="315" src="https://www.youtube.com/embed/rJgPoL4hiSU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary"
+                                                data-dismiss="modal">Fermer</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <legend class="col-form-label required">
+                            <i class="fas fa-graduation-cap"></i> Comment rendre actif un formulaire d'enquête ?
+                        </legend>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <p>Consulter notre vidéo : <a href="https://www.youtube.com/watch?v=z7hDX8Z6lT0" target="_blank">https://www.youtube.com/watch?v=z7hDX8Z6lT0</a></p>
+                            <button type="button" class="btn btn-danger" id="remplirEnq" data-toggle="modal"
+                                data-target="#infos" class="btn btn-primary">▶</button>
+                            <div class="modal" id="infos">
+                                <div class="modal-dialog">
+                                    <div class="modal-content" style="width:100%;">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">PACOMIUT - COMPTAGE - TUTO Activer formulaire
+                                            </h4>
+                                            <button type="button" class="close" data-dismiss="modal">
+                                                <span>&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <iframe width="100%" height="315" src="https://www.youtube.com/embed/z7hDX8Z6lT0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary"
+                                                data-dismiss="modal">Fermer</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <legend class="col-form-label required">
+                            <i class="fas fa-graduation-cap"></i> Comment remplir et télécharger un formulaire d'enquête ?
+                        </legend>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <p>Consulter notre vidéo : <a href="https://www.youtube.com/watch?v=WF9am97T_S0" target="_blank">https://www.youtube.com/watch?v=WF9am97T_S0</a></p>
+                            <button type="button red" id='editEnq' class="btn btn-danger" data-toggle="modal" data-target="#infos"
+                                class="btn btn-primary">▶</button>
+                            <div class="modal" id="infos">
+                                <div class="modal-dialog">
+                                    <div class="modal-content" style="width:100%;">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">PACOMIUT - COMPTAGE - TUTO Remplir et
+                                                télécharger formulaire</h4>
+                                            <button type="button" class="close" data-dismiss="modal">
+                                                <span>&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <iframe width="100%" height="315" src="https://www.youtube.com/embed/WF9am97T_S0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary"
+                                                data-dismiss="modal">Fermer</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <legend class="col-form-label required">
+                            <i class="fas fa-graduation-cap"></i> Comment éditer un formulaire d'enquête ?
+                        </legend>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <p>Consulter notre vidéo : <a href="https://www.youtube.com/watch?v=tok8Y8zCujg" target="_blank">https://www.youtube.com/watch?v=tok8Y8zCujg</a></p>
+                            <button type="button red" class="btn btn-danger" data-toggle="modal" data-target="#infos"
+                                class="btn btn-primary">▶</button>
+                            <div class="modal" id="infos">
+                                <div class="modal-dialog">
+                                    <div class="modal-content" style="width:100%;">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">PACOMIUT - COMPTAGE - TUTO Remplir et
+                                                télécharger formulaire</h4>
+                                            <button type="button" class="close" data-dismiss="modal">
+                                                <span>&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+<iframe width="100%" height="315" src="https://www.youtube.com/embed/tok8Y8zCujg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>                                            </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary"
+                                                data-dismiss="modal">Fermer</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</main>
+<script>
+    function scrollLent() {
+        var scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (scrollTop > 0) {
+            scrollBy(0, -5);
+            setTimeout(scrollLent, 5);
+        }
+        return true;
+    }
+
+</script>
+{% endblock %}

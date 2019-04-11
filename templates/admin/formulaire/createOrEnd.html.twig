@@ -1,0 +1,56 @@
+{% extends 'layouts/app.html.twig' %}
+
+{% block title %}Ajouter un formulaire{% endblock %}
+
+{% block body %}
+<main role="main" class="container">
+    <div class="card mt-5">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-8 col-lg-8 col-xs-12">
+                    <h2 class="class-title">Créer ou reprendre un formulaire en cours</h2>
+                </div>
+                <div class="col-md-4 col-lg-4 text-right">
+                    <a class="btn btn-sm btn-neutral" href="{{ path('formulaire') }}"><i class="fas fa-backward"></i> Retour</a>
+                </div>
+            </div>
+            <hr>
+            <div class="container text-center">
+                <div class="row">
+                    <div class="col-md-4">
+                        <a class="btn btn-success" href="{{ path('formulaire_create_new_satisfaction') }}">Créer un nouveau formulaire</a>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <select onclick="updateLink(this.value)" id="tempform" class="form-control">
+                                    {% for tempForm in tempForms %}
+                                        <option value="{{ tempForm.id }}">{{ tempForm.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <a id="btn_link" class="btn btn-primary" href="{{ path('formulaire_end', {tempForm: tempForms[0].id}) }}">Reprendre un formulaire</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <div class="row text-center justify-content-md-center">
+                    <div class="col-md-6">
+                        <a class="btn btn-danger" href="{{ path('formulaire_delete_temp') }}">Supprimer les formulaires temporaires</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
+{% block javascripts %}
+<script type="text/javascript">
+    function updateLink(value) {
+        document.getElementById('btn_link').href = "{{ path('formulaire_end', {tempForm: 0})|replace({'/0': ''}) }}/"+value;
+    }
+</script>
+{% endblock %}

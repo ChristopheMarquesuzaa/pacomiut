@@ -1,0 +1,134 @@
+{% extends 'layouts/app.html.twig' %}
+
+{% block title %}Ajouter un formulaire{% endblock %}
+
+{% block body %}
+<main role="main" class="container">
+    <div class="card mt-5">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-8 col-lg-8 col-xs-12">
+                    <h2 class="class-title">Ajouter un formulaire</h2>
+                </div>
+            </div>
+            <hr>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                    {{ form_start(form) }}
+                        <div class="row">
+                            <div class="col-md-12">
+                                {{ form_row(form.name) }}
+                            </div>
+                            <div class="col-md-4">
+                                {{ form_row(form.type) }}
+                            </div>
+                            <div class="col-md-4">
+                                {{ form_row(form.departement) }}
+                            </div>
+                            <div class="col-md-4">
+                                {{ form_row(form.actif) }}
+                            </div>
+                        </div>
+                        <hr>
+                        <h5>Ajouter une formation (obligatoire)</h5>
+                        <div id="formations">
+                        </div>
+                        <hr>
+                        <h5>Ajouter accompagnateur</h5>
+                        <div id="accompagnateur">
+                            <div class='card p-2 mb-3'>
+                                <div class='row'>
+                                    <div class='col-md-4'>
+                                        <div class='form-group'>
+                                            <label>Valeur par defaut :</label>
+                                            <input class='form-control' id='default_accompagnateur' type='number' min="0" value="0">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <h5>Ajouter une porte (obligatoire)</h5>
+                        <div id="portes">
+                        </div>
+                        {{ form_widget(form.questions, {'attr': {'style': 'display: none' }}) }}
+                    {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    var nombrePorte = 0;
+    var nombreFormation = 0;
+     $("#default_accompagnateur").on('change', updateJSON);
+    addPorte();
+    addFormation();
+
+    function addPorte()
+    {
+        nombrePorte = nombrePorte + 1;
+        $('#portes').append("<div class='card p-2 mb-3' id='porte_"+nombrePorte+"'><div class='row'><div class='col-md-4'><div class='form-group'><label for='formulaire_porte_"+nombrePorte+"'>Nom de la porte</label><input class='form-control' id='formulaire_porte_"+nombrePorte+"' type='text' name='formulaire[questions][portes]["+nombrePorte+"]'></div></div><div style='margin: auto;' class='col-md-4'><button type='button' class='m-1 btn btn-success' onclick='addPorte()'>Ajouter</button><button onclick='removePorte("+nombrePorte+")' type='button' class='btn btn-danger'>Supprimer</button></div></div></div>");
+        $("#formulaire_porte_"+nombrePorte).on('change', updateJSON);
+    }
+
+    function updateJSON()
+    {
+        var data = {};
+        data['portes'] = [];
+        data['default_accompagnateur'] = document.getElementById('default_accompagnateur').value;
+        data['formations'] = [];
+        $("input[id*='formulaire_porte_']").each(function(i, o) {
+            data['portes'].push(o.value);
+        });
+        $("input[id*='formulaire_formations_']").each(function(i, o) {
+            data['formations'].push(o.value);
+        });
+        $('#formulaire_questions').text(JSON.stringify(data));
+    }
+
+    function addFormation()
+    {
+        nombreFormation = nombreFormation + 1;
+        $('#formations').append("<div class='card p-2 mb-3' id='formations_"+nombreFormation+"'><div class='row'><div class='col-md-4'><div class='form-group'><label for='formulaire_formations_"+nombreFormation+"'>Nom de la formation</label><input class='form-control' id='formulaire_formations_"+nombreFormation+"' type='text' name='formulaire[questions][formations]["+nombreFormation+"]'></div></div><div style='margin: auto;' class='col-md-4'><button type='button' class='m-1 btn btn-success' onclick='addFormation()'>Ajouter</button><button onclick='removeFormation("+nombreFormation+")' type='button' class='btn btn-danger'>Supprimer</button></div></div></div> ");
+        $("#formulaire_formations_"+nombreFormation).on('change', updateJSON);
+    }
+
+    function removePorte(porte)
+    {
+        if (nombrePorte == 1) {
+            Swal.fire({
+                type: 'error',
+                title: 'Oops...',
+                text: 'Une porte est obligatoire!',
+            })
+        } else {
+            $("formulaire_portes_"+nombrePorte).off();
+            $('#porte_'+porte).remove();
+            nombrePorte = nombrePorte - 1;
+        }
+        updateJSON();
+    }
+
+    function removeFormation(formation)
+    {
+        if (nombreFormation == 1) {
+            Swal.fire({
+                type: 'error',
+                title: 'Oops...',
+                text: 'Une formation est obligatoire!',
+            })
+        } else {
+            $("formulaire_formations_"+nombreFormation).off();
+            $('#formations_'+formation).remove();
+            nombreFormation = nombreFormation - 1;
+        }
+        updateJSON();
+    }
+</script>
+{% endblock %}

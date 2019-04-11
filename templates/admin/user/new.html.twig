@@ -1,0 +1,26 @@
+{% extends 'layouts/app.html.twig' %}
+
+{% block title %}Ajouter un utilisateur{% endblock %}
+
+{% block body %}
+<main role="main" class="container">
+    <div class="card mt-5">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-8 col-lg-8 col-xs-12">
+                    <h2 class="class-title">Ajouter un utilisateur</h2>
+                </div>
+                <div class="col-md-4 col-lg-4 text-right">
+                    <a class="btn btn-sm btn-neutral" href="{{ path('user_index') }}"><i class="fas fa-backward"></i> Retour</a>
+                </div>
+            </div>
+            <hr>
+            <div class="container">
+                <div class="row">
+                    {{ include('admin/user/_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

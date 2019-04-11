@@ -1,0 +1,34 @@
+{% extends 'layouts/app.html.twig' %}
+
+{% block title %}Editer l'utilisateur{% endblock %}
+
+{% block body %}
+<main role="main" class="container">
+    <div class="card mt-5">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-8 col-lg-8 col-xs-12">
+                    <h2 class="class-title">Editer un utilisateur</h2>
+                </div>
+                <div class="col-md-4 col-lg-4 text-right">
+                    <a class="btn btn-warning btn-sm" href="{{ path('user_password', { id: user.id }) }}">Changer le mot de passe</a>
+                    <a class="btn btn-sm btn-neutral" href="{{ path('user_index') }}"><i class="fas fa-backward"></i> Retour</a>
+                </div>
+            </div>
+            <hr>
+            <div class="container">
+                <div class="row">
+                    {{ form_start(form) }}
+                        {{ form_row(form.username, {'label' : 'Identifiant' }) }}
+                        {{ form_row(form.firstname, {'label' : 'Prénom' }) }}
+                        {{ form_row(form.surname, {'label' : 'Nom de famille' }) }}
+                        {{ form_row(form.email) }}
+                        {{ form_row(form.roles, { 'label': 'Changer le rôle du compte' }) }}
+                        <button class="btn btn-success">{{ button_label|default('Enregistrer') }}</button>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

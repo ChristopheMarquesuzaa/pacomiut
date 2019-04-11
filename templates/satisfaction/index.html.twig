@@ -1,0 +1,93 @@
+{% extends 'layouts/app.html.twig' %}
+
+{% block title %}Enquête de satisfaction!{% endblock %}
+
+{% block body %}
+<main role="main" class="container">
+    <div class="card mt-5">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-8 col-lg-8  col-xs-12">
+                    <h2 class="class-title">Formulaire de la {{ formulaire.name }}</h2>
+                </div>
+                <div class="col-md-4 col-lg-4 col-xs-12">
+                    <br>
+                    <h4 class="class-title">Département {{ formulaire.departement.name }}</h4>
+                </div>
+            </div>
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="flash-{{ label }} alert alert-{{ label }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+                <hr>
+            {% else %}
+                <hr>
+            {% endfor %}
+            <div class="row text-center">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            {{ form_start(form) }}
+                                {% for block in formulaire.blocks %}
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h2 class="card-title">{{ block.name }}</h2>
+                                            <hr>
+                                            {% for question in block.questions %}
+                                                <h4>{{ question.title }}</h4>
+                                                <div class="row justify-content-md-center">
+                                                    <div class="col-md-6">
+                                                        {% if question.type == 4 %}
+                                                            <input class="form-control" type="text" name="questions[{{ question.id }}]">
+                                                        {% elseif question.type == 0 %}
+                                                            <select class="form-control" name="questions[{{ question.id }}]" id="questions[{{ question.id }}]">
+                                                                {% for choice in (question.answer|split('###')) %}
+                                                                    <option value="{{choice}}">{{choice}}</option>
+                                                                {% endfor %}
+                                                            </select>
+                                                        {% elseif question.type == 1 %}
+                                                            <select multiple class="form-control" name="questions[{{ question.id }}][]" id="questions[{{ question.id }}][]">
+                                                                {% for choice in (question.answer|split('###')) %}
+                                                                    <option value="{{choice}}">{{choice}}</option>
+                                                                {% endfor %}
+                                                            </select>
+                                                        {% elseif question.type == 2 %}
+                                                            {% for choice in (question.answer|split('###')) %}
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" name="questions[{{question.id}}][]" id="questions[{{question.id}}][{{choice}}]" value="{{choice}}" {{ loop.first ? 'checked' : ''}}>
+                                                                    <label class="form-check-label" for="questions[{{question.id}}][{{choice}}]">
+                                                                        {{ choice }}
+                                                                    </label>
+                                                                </div>
+                                                            {% endfor %}
+                                                        {% elseif question.type == 3 %}
+                                                            {% for choice in (question.answer|split('###')) %}
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="questions[{{question.id}}]" id="questions[{{question.id}}][{{choice}}]" value="{{choice}}" {{ loop.first ? 'checked' : ''}}>
+                                                                    <label class="form-check-label" for="questions[{{question.id}}][{{choice}}]">
+                                                                        {{ choice }}
+                                                                    </label>
+                                                                </div>
+                                                            {% endfor %}
+                                                        {% elseif question.type == 5 %}
+                                                            <textarea class="form-control" name="questions[{{question.id}}]" id="questions[{{question.id}}]"></textarea>
+                                                        {% endif %}
+                                                        <hr>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                                <button type="submit" class="btn btn-default">Envoyer</button>
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

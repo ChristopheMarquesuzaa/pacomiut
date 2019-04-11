@@ -1,0 +1,128 @@
+{% extends 'layouts/app.html.twig' %}
+
+{% block title %}Liste des utilisateurs{% endblock %}
+
+{% block body %}
+<main role="main" class="container">
+    <div class="card mt-5">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-9 col-lg-9 col-xs-12">
+                    <h2 class="class-title">Liste des utilisateurs</h2>
+                </div>
+                <div class="col-md-3">
+                    <a href="{{ path('user_new') }}" class="btn btn-primary">Ajouter un utilisateur</a>
+                </div>
+                <br>
+                <div class="col-md-12" style="margin-top: 10px;">
+                    {% for label, messages in app.flashes %}
+                        {% for message in messages %}
+                            <div class="flash-{{ label }} alert alert-{{ label }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            </div>
+            <hr>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="table" class="table">
+                            <thead>
+                                <tr>
+                                    <th>Identifiant</th>
+                                    <th>Email</th>
+                                    <th>Admin</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for user in users %}
+                                    <tr>
+                                        <td>{{ user.username }}</td>
+                                        <td>{{ user.email }}</td>
+                                        <td>
+                                            {{ user.admin ? 'Oui' : 'Non' }}
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-icon btn-sm btn-primary" title="Editer" href="{{ path('user_edit', { id:user.id })}}">
+                                                <span class="btn-inner--icon"><i class="fas fa-edit"></i></span>
+                                            </a>
+                                            {% if (user.id != 1) %}
+                                                <a class="btn btn-icon btn-sm btn-warning" title="Supprimer" onclick="deleteUtilisateur('{{ path('user_delete', {id:user.id}) }}')">
+                                                    <span class="btn-inner--icon"><i class="fas fa-trash"></i></span>
+                                                </a>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <td colspan="5">no records found</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    function deleteUtilisateur(path) {
+        Swal.fire({
+            title: 'Attention ! Vous allez supprimer un utilisateur',
+            text: "La suppression d'un utilisateur implique la suppression des données qui lui sont associées.",
+            type: 'warning',
+            showCancelButton: true,
+            cancelButtonText: 'Non !',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Oui, supprimer l\'utilisateur !'
+        }).then((result) => {
+            if (result.value) {
+                window.location.replace(path);
+            }
+        })
+    }
+
+    $(document).ready(function () {
+$('#table').DataTable({
+    "language": {
+        "sProcessing":     "Traitement en cours...",
+        "sSearch":         "Rechercher&nbsp;:",
+        "sLengthMenu":     "Afficher _MENU_ &eacute;l&eacute;ments",
+        "sInfo":           "Affichage de l'&eacute;l&eacute;ment _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
+        "sInfoEmpty":      "Affichage de l'&eacute;l&eacute;ment 0 &agrave; 0 sur 0 &eacute;l&eacute;ment",
+        "sInfoFiltered":   "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
+        "sInfoPostFix":    "",
+        "sLoadingRecords": "Chargement en cours...",
+        "sZeroRecords":    "Aucun &eacute;l&eacute;ment &agrave; afficher",
+        "sEmptyTable":     "Aucune donn&eacute;e disponible dans le tableau",
+        "oPaginate": {
+            "sFirst":      "Premier",
+            "sPrevious":   "Pr&eacute;c&eacute;dent",
+            "sNext":       "Suivant",
+            "sLast":       "Dernier"
+        },
+        "oAria": {
+            "sSortAscending":  ": activer pour trier la colonne par ordre croissant",
+            "sSortDescending": ": activer pour trier la colonne par ordre d&eacute;croissant"
+        },
+        "select": {
+            "rows": {
+                _: "%d lignes séléctionnées",
+                0: "Aucune ligne séléctionnée",
+                1: "1 ligne séléctionnée"
+            }
+        }
+    },
+    responsive: true,
+});    });
+
+</script>
+{% endblock %}

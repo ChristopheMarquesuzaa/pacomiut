@@ -1,0 +1,79 @@
+{% extends 'layouts/app.html.twig' %}
+
+{% block title %}Liste des départements{% endblock %}
+
+{% block body %}
+<main role="main" class="container">
+    <div class="card mt-5">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-9 col-lg-9 col-xs-12">
+                    <h2 class="class-title">Liste des départements</h2>
+                </div>
+                <div class="col-md-3">
+                    <a href="{{ path('departement_create') }}" class="btn btn-primary">Ajouter un département</a>
+                </div>
+                <div class="col-md-12">
+                    {% for label, messages in app.flashes %}
+                        {% for message in messages %}
+                            <div class="flash-{{ label }} alert alert-{{ label }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                        <hr>
+                    {% endfor %}
+                </div>
+            </div>
+            <hr>
+            <div class="container">
+                <div class="row">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Libellé long</th>
+                                <th scope="col">Libellé court</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for departement in departements %}
+                                <tr>
+                                    <td>{{ departement.name }}</td>
+                                    <td>{{ departement.shortname }}</td>
+                                    <td>
+                                        <a style="color: white;" class="btn btn-sm btn-primary" href="{{ path('departement_show', {departement: departement.id}) }}"  title="Consulter" ><i class="far fa-eye"></i></a>
+                                        <a style="color: white;" class="btn btn-sm btn-warning" href="{{ path('departement_edit', {departement: departement.id}) }}"  title="Editer" ><i class="far fa-edit"></i></a>
+                                        <a style="color: white;" class="btn btn-sm btn-danger" onclick='delete_departement("{{ path('departement_delete', {departement: departement.id}) }}")'  title="Supprimer" ><i class='far fa-trash-alt'></i></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    function delete_departement(path)
+    {
+        Swal.fire({
+            title: 'Attention, merci de confirmer !  Vous allez supprimer un département',
+            text: "Vous allez supprimer un département.",
+            type: 'warning',
+            showCancelButton: true,
+            cancelButtonText: 'Non !',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Oui, supprimer le département !'
+        }).then((result) => {
+            if (result.value) {
+                window.location.replace(path);
+            }
+        })
+    }
+</script>
+{% endblock %}
